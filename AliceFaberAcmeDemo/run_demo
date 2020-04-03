@@ -6,7 +6,7 @@ function start_logs() {
 }
 
 function web_start() {
-	echo "Starting all agents and controllers, this may take a moment."
+	echo "Starting all agents, this may take a moment."
 
 	FABER_AGENT_HOST="faber-agent"
 	ALICE_AGENT_HOST="localhost"
