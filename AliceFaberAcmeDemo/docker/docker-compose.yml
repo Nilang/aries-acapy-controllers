@@ -5,7 +5,7 @@ services:
     faber-agent:
         command: ['faber --port 8020']
         build:
-            context: https://github.com/petridishdev/aries-cloudagent-python.git#openapi-demo
+            context: https://github.com/hyperledger/aries-cloudagent-python.git#master
             dockerfile: ./docker/Dockerfile.demo
         ports:
             - 8020-8027:8020-8027
@@ -20,7 +20,7 @@ services:
     alice-agent:
         command: ['alice --port 8030']
         build:
-            context: https://github.com/petridishdev/aries-cloudagent-python.git#openapi-demo
+            context: https://github.com/hyperledger/aries-cloudagent-python.git#master
             dockerfile: ./docker/Dockerfile.demo
         ports:
             - 8030-8037:8030-8037
@@ -35,7 +35,7 @@ services:
     acme-agent:
         command: ['acme --port 8040']
         build:
-            context: https://github.com/petridishdev/aries-cloudagent-python.git#openapi-demo
+            context: https://github.com/hyperledger/aries-cloudagent-python.git#master
             dockerfile: ./docker/Dockerfile.demo
         ports:
             - 8040-8047:8040-8047
@@ -47,44 +47,6 @@ services:
             - LEDGER_URL=${LEDGER_URL}
             - GENESIS_URL=${GENESIS_URL}
         tty: true
-
-    # Controllers
-    faber-controller:
-        build:
-            context: ../controllers/faber-controller/
-        ports:
-            - 9021:80
-        networks:
-            - aca
-        depends_on:
-            - faber-agent
-        environment:
-            - RUNMODE=${RUNMODE}
-            - FABER_AGENT_HOST=${FABER_AGENT_HOST}
-    alice-controller:
-        build:
-            context: ../controllers/alice-controller/
-            args:
-                - RUNMODE=${RUNMODE}
-                - ALICE_AGENT_HOST=${ALICE_AGENT_HOST}
-        ports:
-            - 9031:80
-        networks:
-            - aca
-        depends_on:
-            - alice-agent
-    acme-controller:
-        build:
-            context: ../controllers/acme-controller/
-        ports:
-            - 9041:3000
-        networks:
-            - aca
-        depends_on:
-            - acme-agent
-        environment:
-            - RUNMODE=${RUNMODE}
-            - ACME_AGENT_HOST=${ACME_AGENT_HOST}
 
 networks:
     aca:
